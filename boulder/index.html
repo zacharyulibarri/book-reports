@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book Reports | Boulder</title>
+  <style>
+
+    @import url(//db.onlinewebfonts.com/c/91db3f2094638a07f654364bee66a81e?family=TeXGyreHeros);
+
+    /* ── Reset & base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: 'TeXGyreHeros', Helvetica, Arial, sans-serif;
+      font-size: 18px;
+      line-height: 1.6;
+      padding: 16px;
+    }
+
+    @media (min-width: 700px)  { body { padding: 24px 5%; } }
+    @media (min-width: 1100px) { body { padding: 32px 12%; } }
+
+    a:link, a:visited { color: #00ffff; }
+    a:hover { color: #fff; }
+
+    /* ── Site header ── */
+    .site-header {
+      border-bottom: 1px solid #333;
+      padding-bottom: 14px;
+      margin-bottom: 24px;
+    }
+
+    .site-title {
+      font-size: clamp(1.8rem, 6vw, 3rem);
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 2px 2px 6px #000;
+      letter-spacing: 0.02em;
+    }
+
+    .site-tagline {
+      font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+      color: #aaa;
+      font-style: italic;
+      margin-top: 2px;
+      letter-spacing: 0.04em;
+    }
+
+    .site-city {
+      font-size: clamp(0.8rem, 2vw, 1rem);
+      color: #00ffff;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    /* ── Nav ── */
+    nav {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    nav a {
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #00ffff;
+      border: 1px solid #00ffff44;
+      padding: 4px 12px;
+      border-radius: 2px;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    nav a:hover, nav a.active {
+      background: #00ffff;
+      color: #000;
+    }
+
+    /* ── Section headings ── */
+    h2 {
+      font-size: clamp(1.2rem, 3.5vw, 1.6rem);
+      color: #fff;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px #000;
+      margin: 36px 0 16px;
+      letter-spacing: 0.04em;
+    }
+
+    h3 {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: #fff;
+      font-weight: bold;
+      text-shadow: 1px 1px 3px #000;
+      letter-spacing: 0.03em;
+    }
+
+    /* ── Loading state ── */
+    .loading-state {
+      color: #333;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 32px 0;
+    }
+
+    /* ── Empty / error state ── */
+    .empty-state {
+      border: 1px solid #1e1e1e;
+      border-left: 4px solid #333;
+      background: #060606;
+      padding: 40px 32px;
+      border-radius: 2px;
+      margin-top: 8px;
+      max-width: 560px;
+    }
+
+    .empty-state-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+      opacity: 0.4;
+    }
+
+    .empty-state-heading {
+      font-size: clamp(1.1rem, 2.8vw, 1.35rem);
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 10px;
+      letter-spacing: 0.02em;
+    }
+
+    .empty-state-body {
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    /* ── Event block (wraps card + RSVP for one event) ── */
+    .event-block {
+      margin-bottom: 56px;
+    }
+
+    /* ── Event card ── */
+    .event-card {
+      border: 1px solid #333;
+      border-left: 4px solid #00ffff;
+      background: #0a0a0a;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      border-radius: 2px;
+    }
+
+    .event-date {
+      font-size: clamp(1.3rem, 4vw, 1.9rem);
+      font-weight: bold;
+      color: #00ffff;
+      text-shadow: 1px 1px 4px #004444;
+      margin-bottom: 8px;
+    }
+
+    .event-meta {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 6px 16px;
+      font-size: 1rem;
+    }
+
+    .event-meta .label {
+      color: #666;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      padding-top: 2px;
+    }
+
+    .event-meta .value { color: #fff; }
+    .event-meta .value a { color: #00ffff; }
+
+    .event-notes {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: #666;
+      font-style: italic;
+    }
+
+    /* ── RSVP section ── */
+    .rsvp-section { margin-bottom: 20px; }
+
+    .rsvp-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* Big attendee count badge */
+    .attendee-count {
+      display: inline-block;
+      background: #001a1a;
+      border: 1px solid #00ffff66;
+      color: #00ffff;
+      border-radius: 2px;
+      padding: 3px 16px;
+      font-size: 1.25rem;
+      font-weight: bold;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+
+    thead th {
+      text-align: left;
+      color: #00ffff;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-bottom: 1px solid #333;
+      padding: 6px 10px;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid #1a1a1a;
+      transition: background 0.1s;
+    }
+
+    tbody tr:hover { background: #111; }
+
+    tbody td {
+      padding: 10px;
+      vertical-align: middle;
+    }
+
+    .td-num   { color: #555; font-size: 0.85rem; width: 32px; }
+    .td-name  { color: #fff; font-weight: bold; }
+    .td-name.anon { color: #666; font-style: italic; }
+    .td-guests { color: #aaa; font-size: 0.9rem; }
+
+    .no-rsvps {
+      color: #333;
+      font-size: 0.85rem;
+      font-style: italic;
+      padding: 10px 0;
+    }
+
+    /* ── RSVP form ── */
+    .rsvp-form-section {
+      border: 1px solid #1e1e1e;
+      background: #060606;
+      padding: 20px 24px;
+      border-radius: 2px;
+      margin-bottom: 12px;
+    }
+
+    .rsvp-form-section h3 { margin-bottom: 14px; }
+
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 12px;
+      align-items: flex-end;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .form-group label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #777;
+    }
+
+    .form-group input,
+    .form-group select {
+      background: #111;
+      border: 1px solid #333;
+      color: #fff;
+      font-family: 'TeXGyreHeros', Helvetica, Arial, sans-serif;
+      font-size: 1rem;
+      padding: 8px 10px;
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus { border-color: #00ffff; }
+
+    .form-group input::placeholder { color: #444; }
+
+    .btn-rsvp {
+      background: #00ffff;
+      color: #000;
+      font-family: 'TeXGyreHeros', Helvetica, Arial, sans-serif;
+      font-size: 0.88rem;
+      font-weight: bold;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: none;
+      padding: 10px 28px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-rsvp:hover { background: #fff; }
+
+    .form-note {
+      font-size: 0.82rem;
+      color: #555;
+      font-style: italic;
+    }
+
+    .rsvp-success {
+      font-size: 0.88rem;
+      color: #00ffff;
+      letter-spacing: 0.04em;
+      margin-top: 10px;
+      padding: 10px 16px;
+      border: 1px solid #00ffff44;
+      background: #001a1a;
+      border-radius: 2px;
+      display: none;
+    }
+
+    .rsvp-success .rsvp-success-sub {
+      display: block;
+      font-size: 0.78rem;
+      color: #447777;
+      margin-top: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── Past events link ── */
+    .past-events-link {
+      margin-top: 8px;
+      font-size: 0.85rem;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid #1a1a1a;
+      margin-top: 48px;
+      padding-top: 16px;
+      font-size: 0.8rem;
+      color: #444;
+      text-align: center;
+    }
+
+    footer a { color: #444; }
+    footer a:hover { color: #00ffff; }
+
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════
+       HEADER
+  ══════════════════════════════════════ -->
+  <header class="site-header">
+    <div class="site-title">bookreports.club</div>
+    <div class="site-tagline">The Bookless Book Club</div>
+    <div class="site-city">Boulder, CO</div>
+    <nav>
+      <a href="/">← All Cities</a>
+      <a href="/boulder" class="active">Boulder</a>
+      <a href="/ithaca">Ithaca</a>
+    </nav>
+  </header>
+
+
+  <h2>Upcoming Events in Boulder</h2>
+
+  <!-- Events render here -->
+  <div id="events-container">
+    <p class="loading-state">Loading events&hellip;</p>
+  </div>
+
+  <p class="past-events-link"><a href="/boulder/past">Past Boulder events &rarr;</a></p>
+
+
+  <footer>
+    <a href="/">bookreports.club</a> &nbsp;&middot;&nbsp;
+    <a href="/boulder">Boulder</a> &nbsp;&middot;&nbsp;
+    <a href="/ithaca">Ithaca</a>
+  </footer>
+
+
+  <!-- ══════════════════════════════════════
+       SCRIPTS
+  ══════════════════════════════════════ -->
+  <script>
+
+    // ── CONFIG ───────────────────────────────────────────────────────────────
+    // Set these three URLs once your Google Sheet is published and your
+    // Apps Script is deployed. See SETUP.md for step-by-step instructions.
+    //
+    // To get the CSV URLs:
+    //   File → Share → Publish to web → choose tab → CSV → Copy link
+    //
+    // To get the Apps Script URL:
+    //   Extensions → Apps Script → Deploy → Manage deployments → Copy URL
+
+    const CONFIG = {
+      EVENTS_CSV_URL:   'https://docs.google.com/spreadsheets/d/e/2PACX-1vSY18KpWIzRcPu-YGamD3TKm4OkF55TNfkwngUSV_9NIoIj9RxMaudocGGDKgAwe0D0stpiIrgkibJX/pub?gid=0&single=true&output=csv',
+      RSVPS_CSV_URL:    'https://docs.google.com/spreadsheets/d/e/2PACX-1vSY18KpWIzRcPu-YGamD3TKm4OkF55TNfkwngUSV_9NIoIj9RxMaudocGGDKgAwe0D0stpiIrgkibJX/pub?gid=1588034582&single=true&output=csv',
+      APPS_SCRIPT_URL:  'https://script.google.com/macros/s/AKfycbyeFqMKNds6uEVGxMXG3-QqCywh7tFI0YdpRp3UkipGA6ENiW4NZRng2i7XpB5lTXnX/exec',
+      CITY_LABEL:       'Boulder',
+    };
+
+    // ── CSV PARSER ───────────────────────────────────────────────────────────
+    // Handles quoted fields and commas within quotes.
+
+    function parseCSVRow(row) {
+      const cells = [];
+      let cur = '';
+      let inQ  = false;
+      for (let i = 0; i < row.length; i++) {
+        const ch = row[i];
+        if (ch === '"') {
+          if (inQ && row[i + 1] === '"') { cur += '"'; i++; } // escaped quote
+          else { inQ = !inQ; }
+        } else if (ch === ',' && !inQ) {
+          cells.push(cur.trim());
+          cur = '';
+        } else {
+          cur += ch;
+        }
+      }
+      cells.push(cur.trim());
+      return cells;
+    }
+
+    function parseCSV(text) {
+      const lines = text.trim().split('\n').filter(l => l.trim());
+      if (lines.length < 2) return [];
+      const headers = parseCSVRow(lines[0]);
+      return lines.slice(1).map(line => {
+        const vals = parseCSVRow(line);
+        const obj  = {};
+        headers.forEach((h, i) => { obj[h] = vals[i] || ''; });
+        return obj;
+      });
+    }
+
+    // ── DATE UTILS ───────────────────────────────────────────────────────────
+    // Parse YYYY-MM-DD without timezone shift.
+
+    function parseLocalDate(str) {
+      const [y, m, d] = str.split('-').map(Number);
+      return new Date(y, m - 1, d);
+    }
+
+    function formatEventDate(str) {
+      const d = parseLocalDate(str);
+      return d.toLocaleDateString('en-US', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+      });
+    }
+
+    function formatRSVPHeading(str) {
+      const d = parseLocalDate(str);
+      return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+    }
+
+    // ── RENDER ───────────────────────────────────────────────────────────────
+
+    function guestLabel(n) {
+      const g = parseInt(n, 10) || 0;
+      if (g === 0) return 'solo';
+      return `+${g} guest${g > 1 ? 's' : ''}`;
+    }
+
+    function countAttendees(rsvps) {
+      return rsvps.reduce((sum, r) => sum + 1 + (parseInt(r.GuestCount, 10) || 0), 0);
+    }
+
+    function renderAttendeeTable(rsvps, eventId) {
+      if (rsvps.length === 0) {
+        return `<p class="no-rsvps">No RSVPs yet &mdash; be the first.</p>`;
+      }
+      const rows = rsvps.map((r, i) => {
+        const isAnon = !r.Name || r.Name.toLowerCase() === 'anonymous';
+        const nameCell = isAnon
+          ? `<td class="td-name anon">Anonymous</td>`
+          : `<td class="td-name">${esc(r.Name)}</td>`;
+        return `<tr>
+          <td class="td-num">${i + 1}</td>
+          ${nameCell}
+          <td class="td-guests">${guestLabel(r.GuestCount)}</td>
+        </tr>`;
+      }).join('');
+
+      return `<table>
+        <thead><tr>
+          <th class="td-num">#</th>
+          <th>Name</th>
+          <th>Guests</th>
+        </tr></thead>
+        <tbody id="rsvp-rows-${esc(eventId)}">${rows}</tbody>
+      </table>`;
+    }
+
+    function renderEvent(event, rsvps) {
+      const total     = countAttendees(rsvps);
+      const attending = total === 1 ? '1 attending' : `${total} attending`;
+      const mapsHref  = event.MapsURL
+        ? event.MapsURL
+        : `https://maps.google.com/?q=${encodeURIComponent(event.Location + ', Boulder, CO')}`;
+      const notesHtml = event.Notes
+        ? `<p class="event-notes">${esc(event.Notes)}</p>`
+        : '';
+
+      return `
+      <div class="event-block" id="event-${esc(event.EventID)}">
+
+        <div class="event-card">
+          <div class="event-date">${formatEventDate(event.Date)}</div>
+          <div class="event-meta">
+            <span class="label">Time</span>
+            <span class="value">${esc(event.Time)}</span>
+
+            <span class="label">Location</span>
+            <span class="value">
+              <a href="${esc(mapsHref)}" target="_blank" rel="noopener">${esc(event.Location)}</a>
+              &nbsp;&middot; Boulder, CO
+            </span>
+          </div>
+          ${notesHtml}
+        </div>
+
+        <div class="rsvp-section">
+          <div class="rsvp-header">
+            <h3>Who's Coming</h3>
+            <span class="attendee-count" id="count-${esc(event.EventID)}">${attending}</span>
+          </div>
+          ${renderAttendeeTable(rsvps, event.EventID)}
+          <p class="form-note" style="margin-top:10px;">
+            To modify or remove your RSVP, email <a href="mailto:boulder@bookreports.club">boulder@bookreports.club</a>.
+          </p>
+        </div>
+
+        <div class="rsvp-form-section">
+          <h3>RSVP for ${formatRSVPHeading(event.Date)}</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name-${esc(event.EventID)}">Name <span style="color:#444">(optional)</span></label>
+              <input type="text" id="name-${esc(event.EventID)}" placeholder="Your name, or leave blank for anonymous, or your initials">
+            </div>
+            <div class="form-group" style="max-width: 160px;">
+              <label for="guests-${esc(event.EventID)}">Additional guests</label>
+              <select id="guests-${esc(event.EventID)}">
+                <option value="0">Just me</option>
+                <option value="1">+1</option>
+                <option value="2">+2</option>
+                <option value="3">+3</option>
+                <option value="4">+4</option>
+              </select>
+            </div>
+            <div>
+              <button class="btn-rsvp" id="btn-${esc(event.EventID)}"
+                onclick="submitRSVP('${esc(event.EventID)}')">RSVP</button>
+            </div>
+          </div>
+          <p class="form-note">
+            No RSVP required &mdash; but seeing people (and sometimes names) on the lists makes newcomers more comfortable. Help each other show up and make it easier for us to know what size of table to get!
+          </p>
+          <p class="rsvp-success" id="success-${esc(event.EventID)}">
+            ✓ You're on the list.
+            <span class="rsvp-success-sub">It may take a few minutes for your name to appear below.</span>
+          </p>
+        </div>
+
+      </div>`;
+    }
+
+    function renderEmptyState() {
+      return `<div class="empty-state">
+        <div class="empty-state-icon">○</div>
+        <div class="empty-state-heading">No upcoming events.</div>
+        <p class="empty-state-body">
+          Nothing scheduled right now &mdash; check back soon.
+          <a href="mailto:hello@bookreports.club">Get in touch</a> if you want to help organize one.
+        </p>
+      </div>`;
+    }
+
+    function renderErrorState() {
+      return `<div class="empty-state">
+        <div class="empty-state-icon">?</div>
+        <div class="empty-state-heading">Couldn't load events.</div>
+        <p class="empty-state-body">
+          Something went wrong fetching the schedule. Try refreshing in a moment.
+        </p>
+      </div>`;
+    }
+
+    // ── RSVP SUBMIT ──────────────────────────────────────────────────────────
+    // Uses optimistic update: add to table immediately, fire POST in background.
+
+    function submitRSVP(eventId) {
+      const nameEl   = document.getElementById('name-' + eventId);
+      const guestsEl = document.getElementById('guests-' + eventId);
+      const btn      = document.getElementById('btn-' + eventId);
+      const success  = document.getElementById('success-' + eventId);
+      const countEl  = document.getElementById('count-' + eventId);
+      const tbody    = document.getElementById('rsvp-rows-' + eventId);
+
+      const name   = nameEl.value.trim();
+      const guests = parseInt(guestsEl.value, 10) || 0;
+
+      // ── Optimistic UI update ──
+      // Replace "No RSVPs yet" paragraph if present
+      const noRsvpP = tbody ? null : document.querySelector(`#event-${eventId} .no-rsvps`);
+      if (noRsvpP) {
+        const table = document.createElement('table');
+        table.innerHTML = `<thead><tr>
+          <th class="td-num">#</th><th>Name</th><th>Guests</th>
+        </tr></thead><tbody id="rsvp-rows-${eventId}"></tbody>`;
+        noRsvpP.replaceWith(table);
+      }
+
+      const rows = document.getElementById('rsvp-rows-' + eventId);
+      if (rows) {
+        const rowNum  = rows.querySelectorAll('tr').length + 1;
+        const isAnon  = !name;
+        const nameCell = isAnon
+          ? `<td class="td-name anon">Anonymous</td>`
+          : `<td class="td-name">${esc(name)}</td>`;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td class="td-num">${rowNum}</td>${nameCell}<td class="td-guests">${guestLabel(guests)}</td>`;
+        rows.appendChild(tr);
+      }
+
+      // Update attending count
+      if (countEl) {
+        const cur   = parseInt(countEl.textContent, 10) || 0;
+        const added = 1 + guests;
+        const next  = cur + added;
+        countEl.textContent = `${next} attending`;
+      }
+
+      // Show success message, clear form
+      success.style.display = 'block';
+      nameEl.value   = '';
+      guestsEl.value = '0';
+
+      // ── Fire POST to Apps Script ──
+      if (CONFIG.APPS_SCRIPT_URL) {
+        fetch(CONFIG.APPS_SCRIPT_URL, {
+          method:  'POST',
+          mode:    'no-cors',   // avoids preflight; response unreadable but write succeeds
+          body:    new URLSearchParams({ eventId, name: name || 'Anonymous', guests }),
+        }).catch(() => {
+          // Silent fail — optimistic update already shown
+        });
+      }
+    }
+
+    // ── LOAD ─────────────────────────────────────────────────────────────────
+
+    function esc(s) {
+      return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    async function loadEvents() {
+      const container = document.getElementById('events-container');
+
+      // No URLs configured → show placeholder
+      if (!CONFIG.EVENTS_CSV_URL || !CONFIG.RSVPS_CSV_URL) {
+        container.innerHTML = `<div class="empty-state">
+          <div class="empty-state-icon">⚙</div>
+          <div class="empty-state-heading">Google Sheets not connected yet.</div>
+          <p class="empty-state-body">
+            Plug in <code>EVENTS_CSV_URL</code> and <code>RSVPS_CSV_URL</code> in this page's script block.
+            See <a href="/SETUP.md">SETUP.md</a> for instructions.
+          </p>
+        </div>`;
+        return;
+      }
+
+      try {
+        const [eventsText, rsvpsText] = await Promise.all([
+          fetch(CONFIG.EVENTS_CSV_URL).then(r => r.text()),
+          fetch(CONFIG.RSVPS_CSV_URL).then(r => r.text()),
+        ]);
+
+        const events = parseCSV(eventsText);
+        const rsvps  = parseCSV(rsvpsText);
+
+        // Filter to today and future
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const upcoming = events
+          .filter(e => e.Date && parseLocalDate(e.Date) >= today)
+          .sort((a, b) => parseLocalDate(a.Date) - parseLocalDate(b.Date));
+
+        // Group RSVPs by EventID
+        const rsvpMap = {};
+        rsvps.forEach(r => {
+          if (!r.EventID) return;
+          if (!rsvpMap[r.EventID]) rsvpMap[r.EventID] = [];
+          rsvpMap[r.EventID].push(r);
+        });
+
+        if (upcoming.length === 0) {
+          container.innerHTML = renderEmptyState();
+          return;
+        }
+
+        container.innerHTML = upcoming
+          .map(ev => renderEvent(ev, rsvpMap[ev.EventID] || []))
+          .join('');
+
+      } catch (err) {
+        console.error('Failed to load events:', err);
+        container.innerHTML = renderErrorState();
+      }
+    }
+
+    loadEvents();
+
+  </script>
+
+</body>
+</html>

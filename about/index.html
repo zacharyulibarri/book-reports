@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About — bookreports.club</title>
+  <style>
+
+    @import url(//db.onlinewebfonts.com/c/91db3f2094638a07f654364bee66a81e?family=TeXGyreHeros);
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: 'TeXGyreHeros', Helvetica, Arial, sans-serif;
+      font-size: 18px;
+      line-height: 1.7;
+      padding: 16px;
+    }
+
+    @media (min-width: 700px)  { body { padding: 24px 5%; } }
+    @media (min-width: 1100px) { body { padding: 32px 18%; } }
+
+    a:link, a:visited { color: #00ffff; }
+    a:hover { color: #fff; }
+
+    /* ── Header ── */
+    .site-header {
+      border-bottom: 1px solid #1e1e1e;
+      padding-bottom: 14px;
+      margin-bottom: 36px;
+    }
+
+    .site-title {
+      font-size: clamp(1.4rem, 4vw, 2.2rem);
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 2px 2px 6px #000;
+      letter-spacing: -0.01em;
+    }
+
+    .site-title .dot { color: #00ffff; }
+
+    nav {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    nav a {
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #00ffff;
+      border: 1px solid #00ffff44;
+      padding: 4px 12px;
+      border-radius: 2px;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    nav a:hover, nav a.active {
+      background: #00ffff;
+      color: #000;
+    }
+
+    /* ── Content ── */
+    h1 {
+      font-size: clamp(1.6rem, 5vw, 2.6rem);
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 2px 2px 6px #000;
+      margin-bottom: 24px;
+      letter-spacing: 0.01em;
+    }
+
+    h2 {
+      font-size: clamp(1.1rem, 3vw, 1.4rem);
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 1px 1px 4px #000;
+      margin: 36px 0 12px;
+      letter-spacing: 0.04em;
+    }
+
+    p {
+      color: #ccc;
+      margin-bottom: 16px;
+      max-width: 680px;
+    }
+
+    .accent { color: #00ffff; }
+
+    /* ── City list ── */
+    .city-list {
+      list-style: none;
+      margin: 16px 0 0;
+    }
+
+    .city-list li {
+      border-left: 3px solid #00ffff33;
+      padding: 10px 16px;
+      margin-bottom: 8px;
+      transition: border-color 0.15s;
+    }
+
+    .city-list li:hover { border-color: #00ffff; }
+
+    .city-list a {
+      font-weight: bold;
+      font-size: 1.05rem;
+    }
+
+    .city-list .city-sub {
+      display: block;
+      font-size: 0.82rem;
+      color: #555;
+      margin-top: 2px;
+    }
+
+    /* ── Start a group CTA ── */
+    .cta-block {
+      border: 1px solid #1e1e1e;
+      border-left: 4px solid #00ffff;
+      background: #060606;
+      padding: 20px 24px;
+      margin-top: 36px;
+      max-width: 600px;
+    }
+
+    .cta-block p { margin-bottom: 12px; }
+
+    .cta-link {
+      display: inline-block;
+      background: #00ffff;
+      color: #000;
+      font-weight: bold;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 8px 22px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+
+    .cta-link:link, .cta-link:visited { color: #000; }
+    .cta-link:hover { background: #fff; color: #000; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid #1a1a1a;
+      margin-top: 56px;
+      padding-top: 16px;
+      font-size: 0.78rem;
+      color: #333;
+      text-align: center;
+    }
+
+    footer a { color: #333; }
+    footer a:hover { color: #00ffff; }
+
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="site-title">
+      <a href="/" style="text-decoration:none; color:inherit;">bookreports<span class="dot">.</span>club</a>
+    </div>
+    <nav>
+      <a href="/">← Home</a>
+      <a href="/about" class="active">About</a>
+      <a href="/boulder">Boulder</a>
+      <a href="/ithaca">Ithaca</a>
+    </nav>
+  </header>
+
+
+  <h1>The Bookless Book Club</h1>
+
+  <p>
+    Most book clubs assign a book. Everyone reads it — or pretends to — and then
+    discusses it. That's fine, but it's not what this is.
+  </p>
+
+  <p>
+    We have often found that while we love reading and talking about books, it is
+    very difficult to find a book club that selects titles that we actually want to
+    read. So instead, we've created a bookless book club. You can read whatever you
+    want to read, because whatever you have read is what the club wants to hear about.
+  </p>
+
+  <p>
+    <span class="accent">bookreports.club</span> is a network of informal meetups
+    for people who read. You show up, tell people what you've been reading lately,
+    and hear what everyone else has been into. No assigned books, no pressure to
+    have finished anything, no agenda other than spreading the joy of reading.
+  </p>
+
+  <p>
+    It's sometimes less of a book club, and more of a community get together where
+    everyone happens to read. A lot.
+  </p>
+
+
+  <h2>How it works</h2>
+
+  <p>
+    Each city has its own page with upcoming events — date, time, place. RSVP if
+    you feel like it (it helps people know they won't be alone, so we'd appreciate
+    it if you do so, even if you leave your name blank!), or just show up. Events
+    are usually at a bar or café. There's no membership, and there's no fee. There
+    are only books.
+  </p>
+
+  <p>
+    We'll add email lists and some other features in the future, and if you have
+    any suggestions, please feel free to email the moderator.
+  </p>
+
+
+  <h2>Cities</h2>
+
+  <ul class="city-list">
+    <li>
+      <a href="/boulder">Boulder, CO</a>
+      <span class="city-sub">See upcoming Boulder events</span>
+    </li>
+    <li>
+      <a href="/ithaca">Ithaca, NY</a>
+      <span class="city-sub">See upcoming Ithaca events</span>
+    </li>
+  </ul>
+
+
+  <h2>Start a group in your city</h2>
+
+  <div class="cta-block">
+    <p>
+      Want to bring this to your city? It's straightforward — find a bar that'll
+      have you, pick a date, and we'll get you a page on here. Get in touch.
+    </p>
+    <!-- Replace with your actual contact email -->
+    <a href="mailto:hello@bookreports.club" class="cta-link">Get in touch &rarr;</a>
+  </div>
+
+
+  <footer>
+    <a href="/">bookreports.club</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/boulder">Boulder</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/ithaca">Ithaca</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/about">About</a>
+  </footer>
+
+</body>
+</html>
