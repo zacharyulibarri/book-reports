@@ -532,7 +532,7 @@
 
     function renderAttendeeTable(rsvps, eventId) {
       if (rsvps.length === 0) {
-        return `<p class="no-rsvps">No RSVPs yet &mdash; be the first.</p>`;
+        return `<p class="no-rsvps">No RSVPs yet &mdash; but people will be there! This site is new and most attendees show up without RSVPing online. Be the first to add your name.</p>`;
       }
       const rows = rsvps.map((r, i) => {
         const isAnon = !r.Name || r.Name.toLowerCase() === 'anonymous';
