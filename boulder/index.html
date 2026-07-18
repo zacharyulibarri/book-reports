@@ -577,7 +577,7 @@
 
     function renderEvent(event, rsvps) {
       const total     = countAttendees(rsvps);
-      const attending = total === 1 ? '1 attending' : `${total} attending`;
+      const attending = total === 0 ? '' : (total === 1 ? '1 attending' : `${total} attending`);
       const mapsHref  = event.MapsURL
         ? event.MapsURL
         : `https://maps.google.com/?q=${encodeURIComponent(event.Location + ', Boulder, CO')}`;
@@ -606,7 +606,7 @@
         <div class="rsvp-section">
           <div class="rsvp-header">
             <h3>Who's Coming</h3>
-            <span class="attendee-count" id="count-${esc(event.EventID)}">${attending}</span>
+            ${attending ? `<span class="attendee-count" id="count-${esc(event.EventID)}">${attending}</span>` : `<span id="count-${esc(event.EventID)}"></span>`}
           </div>
           ${renderAttendeeTable(rsvps, event.EventID)}
           <p class="form-note" style="margin-top:10px;">
